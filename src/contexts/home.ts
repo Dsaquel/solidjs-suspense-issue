@@ -1,12 +1,10 @@
-import { createResource, createRoot } from "solid-js"
-import { createProjection, fetchMockData } from "../utils"
+import { createResource } from "solid-js"
+import { createContextProvider, fetchMockData } from "../utils"
 
-export const homeStore = createRoot(() => {
-  const [homeRecord, _setHome, homeArray] = createProjection(
-    createResource(() => fetchMockData('data from home'), { initialValue: {} })[0],
-    { transform: (o) => Object.values(o), initialValue: {} }
-  )
+export const [HomeContext, useHome] = createContextProvider(() => {
+  const homeRecord = createResource(() => fetchMockData('data from nested'))[0]
 
-
-  return { homeRecord, homeArray }
+  return { homeRecord }
 })
+
+export default HomeContext

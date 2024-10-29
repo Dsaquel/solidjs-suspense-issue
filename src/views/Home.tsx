@@ -1,12 +1,14 @@
 import { A } from "@solidjs/router"
-import { homeStore } from "../contexts/home"
+import { useHome } from "../contexts/home.ts"
 
-export default function Home() {
-  const { homeRecord } = homeStore
+export default function HomeComponent() {
+  const { homeRecord } = useHome()
 
-  return <>
-    <h1>Home</h1>
-    <div>my resource: {homeRecord().data}</div>
-    <A href="/home/nested">nested</A>
-  </>
+  return (
+    <div>
+      <h1>Home</h1>
+      <div>my resource: {homeRecord()?.data}</div>
+      <A href="/home/nested">nested</A>
+    </div>
+  )
 }

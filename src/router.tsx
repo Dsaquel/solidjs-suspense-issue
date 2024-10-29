@@ -5,6 +5,11 @@ import {
   onMount,
 } from 'solid-js'
 import { Navigate, Route, Router } from '@solidjs/router'
+import HomeContext from './contexts/home'
+import NestedContext from './contexts/nested'
+
+//const HomeContext = lazy(() => import('./contexts/home'))
+//const NestedContext = lazy(() => import('./contexts/nested'))
 
 const HomeView = lazy(() => import('./views/Home'))
 const NestedView = lazy(() => import('./views/Nested'))
@@ -31,10 +36,10 @@ export const ErrorAndSuspense = (props: ParentProps) => {
 export default function AppRoutes() {
   return (
     <Router root={ErrorAndSuspense} preload={false}>
-      <Route path="/home">
-        <Route component={HomeView} />
-        <Route path="/nested">
-          <Route component={NestedView} />
+      <Route path="/home" component={HomeContext}>
+        <Route path="/" component={HomeView} />
+        <Route path="/nested" component={NestedContext}>
+          <Route path="/" component={NestedView} />
         </Route>
       </Route>
       <Route path="*" component={() => <Navigate href={"/home"} />} />
